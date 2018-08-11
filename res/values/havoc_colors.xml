@@ -15,17 +15,7 @@
      limitations under the License.
 -->
 <resources> 
-
-    <!-- DSLV colors -->
-    <color name="dslv_icon_dark">#80000000</color>
-    <color name="dslv_float_background_color">#ff1b1f23</color>
-
-    <!-- DSLV fab color -->
-    <color name="floating_action_button_touch_tint">#80ffffff</color>
-
-    <color name="fab_ripple">#1fffffff</color><!-- 12% white -->
-    <color name="fab_shape">?android:attr/colorAccent</color>
-	
+ 
     <color name="icon_color_wireless">#4892cf</color>
 	<color name="icon_color_battery">#1d8c8a</color>
 	<color name="icon_color_other">#71a35a</color>
