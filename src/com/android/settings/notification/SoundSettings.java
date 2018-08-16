@@ -63,6 +63,8 @@ public class SoundSettings extends DashboardFragment {
 
     private RingtonePreference mRequestPreference;
     private TwoStatePreference mVolumeLinkNotification;
+    private static NotificationVolumePreferenceController sNotificationVolumeController;
+    private static RingVolumePreferenceController sRingVolumePreferenceController;
 
     @Override
     public void onAttach(Context context) {
@@ -87,7 +89,6 @@ public class SoundSettings extends DashboardFragment {
         if (Utils.isVoiceCapable(getContext())) {
             mVolumeLinkNotification = (TwoStatePreference) findPreference(KEY_VOLUME_LINK_NOTIFICATION);
             initVolumeLinkNotification();
-            updateVolumeLinkNotification();
         } else {
             removePreference(KEY_VOLUME_LINK_NOTIFICATION);
         }
@@ -108,6 +109,9 @@ public class SoundSettings extends DashboardFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (Utils.isVoiceCapable(getContext())) {
+            updateVolumeLinkNotification();
+        }
     }
 
     @Override
@@ -245,8 +249,10 @@ public class SoundSettings extends DashboardFragment {
         // === Volumes ===
         controllers.add(new AlarmVolumePreferenceController(context, callback, lifecycle));
         controllers.add(new MediaVolumePreferenceController(context, callback, lifecycle));
-        controllers.add(new NotificationVolumePreferenceController(context, callback, lifecycle));
-        controllers.add(new RingVolumePreferenceController(context, callback, lifecycle));
+        sNotificationVolumeController = new NotificationVolumePreferenceController(context, callback, lifecycle);
+        controllers.add(sNotificationVolumeController);
+        sRingVolumePreferenceController = new RingVolumePreferenceController(context, callback, lifecycle);
+        controllers.add(sRingVolumePreferenceController);
         controllers.add(new IncreasingRingPreferenceController(context));
         controllers.add(new IncreasingRingVolumePreferenceController(
                     context, incCallback, lifecycle));
@@ -289,11 +295,22 @@ public class SoundSettings extends DashboardFragment {
                     }
                     Settings.System.putInt(getContentResolver(),
                             Settings.System.VOLUME_LINK_NOTIFICATION, val ? 1 : 0);
-                    NotificationVolumePreferenceController notificationVolumeController = 
-                            getPreferenceController(NotificationVolumePreferenceController.class);
-                    if (notificationVolumeController != null) {
-                        notificationVolumeController.getPreference().setVisible(!val);
+
+                    // Delay setEnabled to fix conflict with changed volume changing seekbar value
+                    // leading to not disabling the seekbar
+                    getView().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                sNotificationVolumeController.getPreference().setEnabled(!val);
+                            }
+                    }, 100);
+                    /*
+                    if (val) {
+                        getPreferenceScreen().removePreference(sNotificationVolumeController.getPreference());
+                    } else {
+                        getPreferenceScreen().addPreference(sNotificationVolumeController.getPreference());
                     }
+                    */
                     return true;
                 }
             });
@@ -305,11 +322,14 @@ public class SoundSettings extends DashboardFragment {
             final boolean linkEnabled = Settings.System.getInt(getContentResolver(),
                     Settings.System.VOLUME_LINK_NOTIFICATION, 1) == 1;
             mVolumeLinkNotification.setChecked(linkEnabled);
-            NotificationVolumePreferenceController notificationVolumeController = 
-                    getPreferenceController(NotificationVolumePreferenceController.class);
-            if (notificationVolumeController != null) {
-                notificationVolumeController.getPreference().setVisible(!linkEnabled);
+            sNotificationVolumeController.getPreference().setEnabled(!linkEnabled);
+            /*
+            if (linkEnabled) {
+                getPreferenceScreen().removePreference(sNotificationVolumeController.getPreference());
+            } else {
+                getPreferenceScreen().addPreference(sNotificationVolumeController.getPreference());
             }
+            */
         }
     }
 
