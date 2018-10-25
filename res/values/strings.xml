@@ -9417,6 +9417,9 @@
     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which turns on emulation of a display cutout. -->
     <string name="display_cutout_emulation">Display cutout</string>
 
+    <string name="advanced_notch">Advanced cutout settings</string>
+    <string name="debug_misc_category">Misc</string>
+
     <!-- [CHAR_LIMIT=NONE] Developer Settings: Search keywords for the setting which turns on emulation of a display cutout. -->
     <string name="display_cutout_emulation_keywords">display cutout, notch</string>
 
