@@ -3390,6 +3390,23 @@
         <service android:name=".fuelgauge.batterytip.AnomalyDetectionJobService"
                  android:permission="android.permission.BIND_JOB_SERVICE" />
 
+        <activity android:name="com.havoc.settings.fragments.gestures.GestureAnywhereBuilderActivity" />
+        <activity android:name="com.havoc.settings.fragments.gestures.GestureAnywhereCreateGestureActivity" />   
+
+        <!-- Gesture Anywhere
+        <activity android:name="com.havoc.settings.fragments.gestures.GestureAnywhereBuilderActivity"
+                  android:parentActivityName="com.havoc.settings.fragments.gestures.GestureAnywhereSettings"
+                  android:exported="true">
+        </activity>
+        <activity
+            android:name="com.havoc.settings.fragments.gestures.GestureAnywhereCreateGestureActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter> 
+        </activity> -->
+
         <!-- Havoc Settings -->
         <activity android:name=".Settings$HavocSettingsActivity"
             android:label="@string/havoc_settings_title"

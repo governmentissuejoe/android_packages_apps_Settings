@@ -190,5 +190,6 @@ public class Settings extends SettingsActivity {
     public static class SuspendActionsActivity extends SettingsActivity { /* empty */ }
     public static class RotationActivity extends SettingsActivity { /* empty */ }
     public static class PieControlSettingsActivity extends SettingsActivity { /* empty */ }
+    public static class GestureAnywhereBuilderActivity extends SettingsActivity { /* empty */ }
 
 }
