@@ -19,19 +19,6 @@
                   android:key="development_prefs_screen"
                   android:title="@string/development_settings_title">
 
-          
-    <PreferenceCategory
-        android:key="advanced_notch"
-        android:title="@string/advanced_notch"
-        android:order="99">
-
-        <ListPreference
-            android:key="display_cutout_emulation"
-            android:title="@string/display_cutout_emulation"
-            settings:keywords="@string/display_cutout_emulation_keywords" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory
         android:key="debug_misc_category"
         android:title="@string/debug_misc_category"
